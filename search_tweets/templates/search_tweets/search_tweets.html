@@ -1,0 +1,156 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- css -->
+    <link rel="stylesheet" href="{% static '/css/home.css'%}?ver=1.10">
+    <link rel="stylesheet" href="{% static '/css/search_tweets.css'%}?ver=1.18">
+
+    <title>Twitter Sentiment Analytics</title>
+</head>
+
+<body>
+    <div class="search_page">
+        <div class="sidenav bg-dark">
+            <ul class="navsidebar">
+                <li class="navitem bg-light">
+                    <a href="/home">Home</a>
+                </li>
+                <li class="navitem bg-light">
+                    <a href="/search_tweets">Search Tweets</a>
+                </li>
+            </ul>
+        </div>
+        <div class="content">
+            <div class="tab">
+                <button class="search btn btn-primary" id="search_tweets">
+                    Search Tweets
+                </button>
+                <button class="dashboard btn btn-primary" id="dashboard">
+                    Dashboard
+                </button>
+            </div>
+            <div class="content-wrapper">
+                <div class="search_container" id="search_tab">
+                    <form id="search_form">
+                        <div class="form-group">
+                            <div class="half_left_form">
+                                <label for="Include keywords">Include keywords: </label>
+                                <input type="text" id="Include keywords" placeholder="Ex: twitter twitterdev ..." name="include_keyword" value="twitterdev" required><br><br>
+                                <label for="Exclude keywords">Exclude keywords: </label>
+                                <input type="text" id="Exclude keywords" placeholder="Ex: -facebook -google ..." name="exclude_keyword"><br><br>
+
+                                <label for="Include phrase">Include "exact phrase match": </label>
+                                <input type="text" id="Include phrase" placeholder="Ex: &quot;twitter&quot; &quot;twitterdev&quot; ... " name="include_phrase" value=""><br><br>
+                                <label for="Exclude phrase">Exclude "exact phrase match": </label>
+                                <input type="text" id="Exclude phrase" placeholder="Ex: -&quot;facebook&quot; -&quot;google&quot; ..." name="exclude_phrase"><br><br>
+                            </div>
+                            <div class="half_right_form">
+                                <label for="from_who">Include/Exclude from: </label>
+                                <input type="text" id="from_who" placeholder="Ex: from:twitter -from:facebook" name="from_who"><br><br>
+                                <label for="hashtags">Hashtags: </label>
+                                <input type="text" id="hashtags" placeholder="Ex: #twitter #twitterdev" name="hashtags"><br><br>
+                                <input type="checkbox" id="geo" name="geo" disabled>
+                                <label for="geo">Include geo</label><br><br>
+                                <label for="language">Language: </label>
+                                <input type="text" value="en" name="language" disabled id="language"></input>
+                                <br><br>
+                            </div>
+                            <div class="query_archived_name_text">
+                                <label for="query_archived_name">Query Archived Name: </label>
+                                <input type="text" name="query_archived_name" placeholder="Add a name for select later in archive" value="Default" id="query_name">
+                            </div>
+                            <div class="button-group">
+                                <input type="submit" value="Search Tweets from last 7 days" class="btn-primary" id="submit">
+                                <input type="reset" value="Reset" class="btn-primary" id="reset">
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+                <div class="chart_container" id="chart_tab">
+                    <div class="filter_container" id="filter_group">
+                        <form id="filter_form" class="filter">
+                            <div class="query_dropdown">
+                                <label for="get_id">Select query id</label><br>
+                                <select id="get_id" name="query_archived_id">
+                                    <option value="None ">(None)</option>
+                                </select>
+                            </div>
+                            <div class="date_created">
+                                <label for="checkdate">All</label>
+                                <input type="checkbox" name="checkdate" id="checkdate" checked>
+                                <label for="date_created_at">Date created: </label>
+                                <input id="date_created_at" type="date" name="date_created_at" id="date_created_at" placeholder="yyyy-mm-dd" disabled>
+                            </div>
+                            <div class="button_group">
+                                <label for="query_string">Query String</label>
+                                <input type="text" id="query_string" disabled><br>
+                                <input type="submit" id="filter" value="filter">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="donut-chart">
+                        <div class="chart-name">
+                            <span> Tweets Sentiment Distribution </span>
+                        </div>
+                        <div id="donut-chart">
+                            <canvas id="TweetSentimentDonutChart">
+                        </div>
+                    </div>
+                    <div class="stepped-line-chart">
+                        <div class="chart-name">
+                            <span>Time Series for Tweets</span>
+                        </div>
+                        <div id="stepped-chart">
+                            <canvas id="TimeSeriesChart">
+                        </div>
+
+                    </div>
+                    <div class="bar-chart">
+                        <div class="chart-name">
+                            <span> Word Frequency</span>
+                        </div>
+                        <div id="bar-chart">
+                            <canvas id="WordFrequencyChart">
+                        </div>
+
+                    </div>
+                    <div class="tweets-widget-container" id="tweets-widget-container" style="display:grid">
+                        <div id="top-10-retweeted">retweeted</div>
+                        <div id="top-10-liked">liked</div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="text/javascript " src="{% static '/scripts/search_tweets.js'%}?ver=1.14"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js " integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p " crossorigin="anonymous "></script>
+
+    <!--  Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js "></script>
+
+    <!-- Google chart 
+    <script type="text/javascript " src="https://www.gstatic.com/charts/loader.js "></script>
+    -->
+    <!-- Twitter Widget js -->
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+</body>
+
+</html>

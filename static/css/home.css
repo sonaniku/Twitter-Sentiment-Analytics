@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+* {
+    box-sizing: border-box;
+    font-family: "Montserrat", sans-serif;
+}
+
+body {
+    padding: 0px 16px 0px 0px;
+}
+
+a {
+    text-decoration: none;
+    display: block;
+    position: relative;
+    z-index: 1;
+}
+
+.search_page {
+    display: grid;
+    grid-template-columns: 15% 85%;
+    height: 1000px;
+    gap: 8px;
+}
+
+.search_container {
+    display: block;
+    height: 1000px;
+    width: 100%;
+}
+
+.tweets-widget-container {
+    grid-area: tweets;
+}
+
+.filter_container {
+    grid-area: filter;
+    background-color: white;
+}
+
+.chart_container {
+    display: none;
+    height: 1500px;
+    width: 100%;
+    grid-template-areas: "filter filter" "donut donut" "stepped stepped""bar bar" "tweets tweets";
+    grid-template-rows: 10% 25% 25% 25% 15%;
+    gap: 8px;
+}
+
+.sidenav {
+    position: relative;
+    height: 120%;
+    top: 0;
+    background-color: #111;
+}
+
+.navitem {
+    display: block;
+    width: 100%;
+    height: 100%;
+    margin: 0px 0px 8px 0px;
+    padding: 8px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.navsidebar {
+    padding: 0px;
+}
+
+.tab {
+    grid-area: tab;
+}
+
+.content-wrapper {
+    grid-area: content;
+}
+
+.content {
+    background-color: rgb(245, 245, 245);
+    display: grid;
+    grid-template-areas: "tab" "content";
+    gap: 8px;
+}
+
+.tab {
+    width: 100%;
+    height: 50px;
+    border: 1px solid black;
+    display: block;
+}
+
+.content-wrapper {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
