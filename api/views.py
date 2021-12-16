@@ -27,7 +27,6 @@ def apiOverview(request):
 
 @api_view(['POST'])
 def Query_Add(request): #and search tweets
-    #print(request.data)
     serializer = QueryListSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
@@ -35,7 +34,7 @@ def Query_Add(request): #and search tweets
     query_string = serializer.data["query_string"]
     geo = serializer.data["geo"]
     encoded_query = query_string.encode('utf-8')
-    #print(serializer.data)
+    
     # search_tweets and save to .orc
     try: 
         search_tweets.tweets_mining(query_string, geo, orc_file_id)
