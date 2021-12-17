@@ -389,7 +389,9 @@ function embedTopRetweeted(top_10_retweeted) {
         top_10_retweeted_widget.innerHTML += tweet;
     }
     top_10_retweeted_widget.style.overflow = scroll;
-    twttr.widgets.load(document.getElementById("top-10-retweeted")[0]);
+    setTimeout(function() {
+        twttr.widgets.load(document.getElementById("top-10-retweeted")[0]);
+    }, 10000);
 }
 
 function embedTopLiked(top_10_liked) {
@@ -404,6 +406,8 @@ function embedTopLiked(top_10_liked) {
     }
     //top_10_retweeted_widget.style.height = 500;
     top_10_liked_widget.style.overflow = scroll;
-    twttr.widgets.load(document.getElementById("top-10-liked")[0]);
 
+    setTimeout(function() {
+        twttr.widgets.load(document.getElementById("top-10-liked")[0]);
+    }, 10000);
 }
