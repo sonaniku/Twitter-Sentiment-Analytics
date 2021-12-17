@@ -154,7 +154,7 @@ And then add to file’s configuration:
 ```
 Change mapred-site.xml configuration: (only on primary)
 ```
-<property>
+    <property>
 		<name>mapreduce.framework.name</name>
 		<value>yarn-tez</value>
 	</property>
@@ -186,7 +186,7 @@ Change yarn-site.xml configuration: (only on primary)
 		<value>dat-master</value>
 	</property>
 	<property>
-        	<name>yarn.log.server.url</name>
+        <name>yarn.log.server.url</name>
        	<value>http://dat-master:19888/jobhistory/logs</value>
 	</property>
     <property>
@@ -201,12 +201,10 @@ Change yarn-site.xml configuration: (only on primary)
 	  <name>yarn.nodemanager.aux-services</name>
 	  <value>tez_shuffle</value>
 	</property>
-
 	<property>
 	  <name>yarn.nodemanager.aux-services.tez_shuffle.class</name>
 	  <value>org.apache.tez.auxservices.ShuffleHandler</value>
 	</property>
-	
 	<property>
  		<name>yarn.log-aggregation-enable</name>
  		<value>true</value>
@@ -217,14 +215,12 @@ Change yarn-site.xml configuration: (only on primary)
 	  and events to the Timeline server.</description>
 	  <name>yarn.timeline-service.enabled</name>
 	  <value>false</value>
-	</property>
-	
+	</property>	
 	<property>
 	  <description>The hostname of the Timeline service web application.</description>
 	  <name>yarn.timeline-service.hostname</name>
 	  <value>h-primary</value>
 	</property>
-
 	<property>
 	  <description>Enables cross-origin support (CORS) for web services where
 	  cross-origin web response headers are needed. For example, javascript making
@@ -232,14 +228,13 @@ Change yarn-site.xml configuration: (only on primary)
 	  <name>yarn.timeline-service.http-cross-origin.enabled</name>
 	  <value>true</value>
 	</property>
-
 	<property>
 	  <description>Publish YARN information to Timeline Server</description>
 	  <name> yarn.resourcemanager.system-metrics-publisher.enabled</name>
 	  <value>true</value>
 	</property>
 ```
-Identify the workers:
+Identify the workers - 
 Add the secondary machines name (h-secondary) to workers file: (only on primary)
 ```
 sudo nano /usr/local/hadoop/etc/hadoop/workers
@@ -261,12 +256,28 @@ hdfs namenode -format
 ## Step 12: Yarn configuration
 To set up yarn you need to start for exporting all paths: (on primary)
 ```
-export HADOOP_HOME="/usr/local/hadoop"
-export HADOOP_COMMON_HOME=$HADOOP_HOME
+export HADOOP_HOME=/usr/local/hadoop
 export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
-export HADOOP_HDFS_HOME=$HADOOP_HOME
-export HADOOP_MAPRED_HOME=$HADOOP_HOME
-export HADOOP_YARN_HOME=$HADOOP_HOME
+export HADOOP_MAPRED_HOME=${HADOOP_HOME} 
+export HADOOP_COMMON_HOME=${HADOOP_HOME}
+export HADOOP_HDFS_HOME=${HADOOP_HOME} 
+export YARN_HOME=${HADOOP_HOME}
+export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native 
+export PATH=$PATH:$HADOOP_HOME/sbin
+export PATH=$PATH:$HADOOP_HOME/bin
+export HADOOP_CLASSPATH=$HADOOP_CLASSPATH:$TEZ_HOME/*:$TEZ_HOME/lib/*
+export HADOOP_CLASSPATH=$HADOOP_CLASSPATH:/usr/local/hive/lib/* 
+export LIB_JARS=/usr/local/hive/lib/*
+export CLASSPATH=$CLASSPATH:$HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-client-common-3.3.1.jar
+export CLASSPATH=$CLASSPATH:$HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-client-shuffle-3.3.1.jar
+export CLASSPATH=$CLASSPATH:$HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-3.3.1.jar
+export CLASSPATH=$CLASSPATH:$HADOOP_HOME/share/hadoop/common/hadoop-common-3.3.1.jar
+export CLASSPATH=$CLASSPATH:$HADOOP_HOME/share/hadoop/common/hadoop-common-3.3.1-tests.jar
+export CLASSPATH=$CLASSPATH:$HADOOP_HOME/share/hadoop/common/lib/*
+export CLASSPATH=$CLASSPATH:$HADOOP_HOME/share/hadoop/mapreduce2/*
+export CLASSPATH=$CLASSPATH:$HADOOP_HOME/share/hadoop/yarn/*
+export CLASSPATH=$CLASSPATH:$HADOOP_HOME/share/hadoop/mapreduce/*
+export CLASSPATH=$CLASSPATH:$HADOOP_HOME/share/hadoop/common/*
 ```
 Now just change yarn’s configuration on the secondary:
 ```
