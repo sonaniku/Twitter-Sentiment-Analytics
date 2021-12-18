@@ -1,4 +1,4 @@
-You need to install this
+# You need to install this
 
 Python 
 - 3.10.0
@@ -6,7 +6,7 @@ Python
 Django 
 - 3.2.10
 
-Required packages:
+# Required packages:
 - pip install djangorestframework
 -  pip install https://download.lfd.uci.edu/pythonlibs/w6tyco5e/sasl-0.3.1-cp310-cp310-win_amd64.whl
 - pip install requests
@@ -24,5 +24,15 @@ Required packages:
 - pip install thrift-sasl
 - pip install thrift
 
-Hit to run server:
+# Hit to run server:
+## Start Hadoop server 
+Execute these command on Hadoop primary machine, wait a minute for them to become stable
+```
+start-dfs.sh
+start-yarn.sh
+mapred --daemon start historyserver
+hiveserver2
+```
+## Start Django web application
+Add your own credentials in settings.py, then run the application
 - python manage.py runserver
