@@ -290,3 +290,8 @@ And then add the following configurations:
 <value>h-primary</value>
 </property>
 ```
+Change permisson and owner on Hadoop directory:
+```
+sudo chown -R h-user:h-user /usr/local/hadoop
+sudo chmod -R 755 /usr/local/hadoop
+```
